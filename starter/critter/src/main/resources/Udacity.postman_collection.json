@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "37eaca57-3950-4634-b4b5-d9db7b6756e6",
+		"_postman_id": "ab81a005-c6c8-4585-8542-34e3c16c21d3",
 		"name": "Udacity",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "28620332"
@@ -321,7 +321,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8082/schedule/employee/1",
+					"raw": "http://localhost:8082/schedule/customer/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -329,7 +329,7 @@
 					"port": "8082",
 					"path": [
 						"schedule",
-						"employee",
+						"customer",
 						"1"
 					]
 				}

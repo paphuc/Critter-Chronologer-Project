@@ -21,9 +21,11 @@ public class CustomerEntity {
     private String phoneNumber;
 
     private String notes;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PetEntity> pets;
+
+    @ManyToMany(mappedBy = "customers")
+    private List<ScheduleEntity> schedules;
 
     public CustomerDTO toCustomerDTO(CustomerEntity entity) {
         CustomerDTO dto = new CustomerDTO();

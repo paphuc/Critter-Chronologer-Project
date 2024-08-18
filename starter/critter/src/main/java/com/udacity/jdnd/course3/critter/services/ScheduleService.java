@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.services;
 
+import com.udacity.jdnd.course3.critter.entities.CustomerEntity;
 import com.udacity.jdnd.course3.critter.entities.EmployeeEntity;
 import com.udacity.jdnd.course3.critter.entities.PetEntity;
 import com.udacity.jdnd.course3.critter.entities.ScheduleEntity;
@@ -58,12 +59,19 @@ public class ScheduleService {
     public ScheduleEntity add(ScheduleDTO dto) {
         ScheduleEntity entity = new ScheduleEntity();
         List<PetEntity> listPet = petRepository.findAllById(dto.getPetIds());
+        List<CustomerEntity> listCustomers = customerRepository.findAllById(dto.getCustomerIds());
         List<EmployeeEntity> listEmployee = employeeRepository.findAllById(dto.getEmployeeIds());
         entity.setDate(dto.getDate());
         entity.setEmployees(listEmployee);
         entity.setPets(listPet);
         entity.setActivities(dto.getActivities());
 
+        //update customers
+        for(CustomerEntity customer: listCustomers) {
+            if(customer.getSchedules() == null) customer.setSchedules(new ArrayList<>());
+            customer.getSchedules().add(entity);
+            customerRepository.save(customer);
+        }
         //update pets
         for(PetEntity pet : listPet){
             if(pet.getSchedules() == null) pet.setSchedules(new ArrayList<>());

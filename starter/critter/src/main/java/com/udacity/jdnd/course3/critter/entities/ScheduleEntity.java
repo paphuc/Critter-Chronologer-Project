@@ -3,6 +3,8 @@ package com.udacity.jdnd.course3.critter.entities;
 import com.udacity.jdnd.course3.critter.models.schedule.ScheduleDTO;
 import com.udacity.jdnd.course3.critter.models.user.EmployeeSkill;
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -35,6 +37,11 @@ public class ScheduleEntity  {
 
     @ElementCollection
     private Set<EmployeeSkill> activities;
+
+    @ManyToMany
+    @JoinTable(name="schedule_customer", joinColumns = @JoinColumn(name = "schedule_id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_id"))
+    private List<CustomerEntity> customers;
 
     public ScheduleDTO toScheduleDTO(ScheduleEntity entity) {
         ScheduleDTO dto = new ScheduleDTO();
