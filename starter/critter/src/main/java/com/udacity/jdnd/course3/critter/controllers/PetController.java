@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Handles web requests related to Pets.
@@ -36,6 +37,16 @@ public class PetController {
         List<PetEntity> entities = petService.findByOwnerId(ownerId);
         List<PetDTO> dtos = new ArrayList<>();
         for (PetEntity entity : entities) {
+            dtos.add(entity.toPetDTO(entity));
+        }
+        return dtos;
+    }
+
+    @GetMapping
+    public List<PetDTO> getPets(){
+        List<PetEntity> pets = petService.findAll();
+        List<PetDTO> dtos = new ArrayList<>();
+        for (PetEntity entity : pets) {
             dtos.add(entity.toPetDTO(entity));
         }
         return dtos;

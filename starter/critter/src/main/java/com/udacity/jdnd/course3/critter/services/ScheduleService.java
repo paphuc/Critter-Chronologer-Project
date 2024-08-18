@@ -16,6 +16,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -37,7 +38,7 @@ public class ScheduleService {
     private EntityManager entityManager;
 
     public List<ScheduleEntity> findByCustomer(Long id) {
-        List<PetEntity> pets = petRepository.findByOwnerById(id);
+        List<PetEntity> pets = petRepository.findByCustomerId(id);
         List<ScheduleEntity> listEntity = new ArrayList<>();
         for (PetEntity pet : pets) {
             listEntity.addAll(scheduleRepository.findByPets(pet));
@@ -62,6 +63,13 @@ public class ScheduleService {
         entity.setEmployees(listEmployee);
         entity.setPets(listPet);
         entity.setActivities(dto.getActivities());
+
+        //update pets
+        for(PetEntity pet : listPet){
+            if(pet.getSchedules() == null) pet.setSchedules(new ArrayList<>());
+            pet.getSchedules().add(entity);
+            petRepository.save(pet);
+        }
         return scheduleRepository.save(entity);
     }
 

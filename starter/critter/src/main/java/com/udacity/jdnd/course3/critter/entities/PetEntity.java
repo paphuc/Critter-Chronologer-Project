@@ -4,9 +4,11 @@ import com.udacity.jdnd.course3.critter.models.pet.*;
 import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "pets")
@@ -29,9 +31,11 @@ public class PetEntity {
     @Column
     private String notes;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    @ManyToOne(optional = true,cascade = CascadeType.ALL)
     private CustomerEntity customer;
+
+    @ManyToMany(mappedBy = "pets")
+    private List<ScheduleEntity> schedules;
 
     public PetDTO toPetDTO(PetEntity petEntity) {
         PetDTO petDTO = new PetDTO();
